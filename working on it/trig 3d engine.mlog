@@ -267,161 +267,164 @@
     op mul Size Size 10
     set @counter callback3
 #rotate functions
-    #rotate a 3d vec Rx in the memory
-        rotateVect3DX:
-        op mod angle angle 360
-        op sin sin0 angle 0
-        op cos cos0 angle 0
-        op mul -sin0 sin0 -1
-        op sub Save Save 1
-        read z memory Save
-        op sub Save Save 1
-        read y memory Save 
-        op sub z z baseZ
-        op sub y y baseY
-        op mul zsin0 z sin0
-        op mul ycos0 y cos0
-        op mul zcos0 z cos0
-        op mul y-sin0 y -sin0
-        op add Y zsin0 ycos0
-        op add Z zcos0 y-sin0
-        op add Y Y baseY
-        op add Z Z baseZ
-        write Y memory Save
-        op add Save Save 1
-        write Z memory Save
-        op add Save Save 1
-        set @counter callback
-    #rotate a triangle Rx in memory (3 Vec3d)
-        rotatetraingleX:
-        set callback2 callback
-        op add callback @counter 1
-        jump rotateVect3DX always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DX always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DX always 0 0
-        op sub Save Save 3
-        set @counter callback2
-    #rotate a cube Rx in memory (12 triangles 6 sides)
-        rotateCubeX:
-        set callback3 callback
-        rotateCubeXLoop:
-        op add callback @counter 1
-        jump rotatetraingleX always 0 0
-        op add callback @counter 1
-        jump rotatetraingleX always 0 0
-        op add counter counter 1
-        jump rotateCubeXLoop lessThan counter 6
-        set counter 0
-        op add Save Save 108
-        set @counter callback3
-    #rotate a 3d vec Ry in the memory
-        rotateVect3DY:
-        op mod angle angle 360
-        op sin sin0 angle 0
-        op cos cos0 angle 0
-        op mul -sin0 sin0 -1
-        op sub Save Save 1
-        read z memory Save
-        op sub Save Save 2
-        read x memory Save 
-        op sub z z baseZ
-        op sub x x baseY
-        op mul xcos0 x cos0
-        op mul xsin0 x sin0
-        op mul zcos0 z cos0
-        op mul z-sin0 z -sin0
-        op add X xcos0 z-sin0
-        op add Z xsin0 xcos0
-        op add X X baseX
-        op add Z Z baseZ
-        write X memory Save
-        op add Save Save 2
-        write Z memory Save
-        op add Save Save 1
-        set @counter callback
-    #rotate a triangle Ry in memory (3 Vec3d)
-        rotatetraingleY:
-        set callback2 callback
-        op add callback @counter 1
-        jump rotateVect3DY always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DY always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DY always 0 0
-        op sub Save Save 3
-        set @counter callback2
-    #rotate a cube Rx in memory (12 triangles 6 sides)
-        rotateCubeY:
-        set callback3 callback
-        rotateCubeYLoop:
-        op add callback @counter 1
-        jump rotatetraingleY always 0 0
-        op add callback @counter 1
-        jump rotatetraingleY always 0 0
-        op add counter counter 1
-        jump rotateCubeYLoop lessThan counter 6
-        set counter 0
-        op add Save Save 108
-        set @counter callback3
-    #rotate a 3d Vec Rz in memory 
-        rotateVect3DZ:
-        op mod angle angle 360
-        op sin sin0 angle 0
-        op cos cos0 angle 0
-        op mul -sin0 sin0 -1
-        op sub Save Save 2
-        read y memory Save
-        op sub Save Save 1
-        read x memory Save 
-        op sub y y baseY
-        op sub x x baseX
-        op mul ysin0 y sin0
-        op mul xcos0 x cos0
-        op mul ycos0 y cos0
-        op mul x-sin0 x -sin0
-        op add X ysin0 xcos0
-        op add Y ycos0 x-sin0
-        op add Y Y baseY
-        op add X X baseX
-        write X memory Save
-        op add Save Save 1
-        write Y memory Save
-        op add Save Save 2
-        set @counter callback
+    #Rx
+        #rotate a 3d vec Rx in the memory
+            rotateVect3DX:
+            op mod angle angle 360
+            op sin sin0 angle 0
+            op cos cos0 angle 0
+            op mul -sin0 sin0 -1
+            op sub Save Save 1
+            read z memory Save
+            op sub Save Save 1
+            read y memory Save 
+            op sub z z baseZ
+            op sub y y baseY
+            op mul zsin0 z sin0
+            op mul ycos0 y cos0
+            op mul zcos0 z cos0
+            op mul y-sin0 y -sin0
+            op add Y zsin0 ycos0
+            op add Z zcos0 y-sin0
+            op add Y Y baseY
+            op add Z Z baseZ
+            write Y memory Save
+            op add Save Save 1
+            write Z memory Save
+            op add Save Save 1
+            set @counter callback
+        #rotate a triangle Rx in memory (3 Vec3d)
+            rotatetraingleX:
+            set callback2 callback
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            op sub Save Save 3
+            set @counter callback2
+        #rotate a cube Rx in memory (12 triangles 6 sides)
+            rotateCubeX:
+            set callback3 callback
+            rotateCubeXLoop:
+            op add callback @counter 1
+            jump rotatetraingleX always 0 0
+            op add callback @counter 1
+            jump rotatetraingleX always 0 0
+            op add counter counter 1
+            jump rotateCubeXLoop lessThan counter 6
+            set counter 0
+            op add Save Save 108
+            set @counter callback3
+    #Ry
+        #rotate a 3d vec Ry in the memory
+            rotateVect3DY:
+            op mod angle angle 360
+            op sin sin0 angle 0
+            op cos cos0 angle 0
+            op mul -sin0 sin0 -1
+            op sub Save Save 1
+            read z memory Save
+            op sub Save Save 2
+            read x memory Save 
+            op sub z z baseZ
+            op sub x x baseX
+            op mul xcos0 x cos0
+            op mul xsin0 x sin0
+            op mul zcos0 z cos0
+            op mul z-sin0 z -sin0
+            op add X xcos0 z-sin0
+            op add Z xsin0 xcos0
+            op add X X baseX
+            op add Z Z baseZ
+            write X memory Save
+            op add Save Save 2
+            write Z memory Save
+            op add Save Save 1
+            set @counter callback
+        #rotate a triangle Ry in memory (3 Vec3d)
+            rotatetraingleY:
+            set callback2 callback
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            op sub Save Save 3
+            set @counter callback2
+        #rotate a cube Ry in memory (12 triangles 6 sides)
+            rotateCubeY:
+            set callback3 callback
+            rotateCubeYLoop:
+            op add callback @counter 1
+            jump rotatetraingleY always 0 0
+            op add callback @counter 1
+            jump rotatetraingleY always 0 0
+            op add counter counter 1
+            jump rotateCubeYLoop lessThan counter 6
+            set counter 0
+            op add Save Save 108
+            set @counter callback3
+    #Rz
+        #rotate a 3d Vec Rz in memory 
+            rotateVect3DZ:
+            op mod angle angle 360
+            op sin sin0 angle 0
+            op cos cos0 angle 0
+            op mul -sin0 sin0 -1
+            op sub Save Save 2
+            read y memory Save
+            op sub Save Save 1
+            read x memory Save 
+            op sub y y baseY
+            op sub x x baseX
+            op mul ysin0 y sin0
+            op mul xcos0 x cos0
+            op mul ycos0 y cos0
+            op mul x-sin0 x -sin0
+            op add X ysin0 xcos0
+            op add Y ycos0 x-sin0
+            op add Y Y baseY
+            op add X X baseX
+            write X memory Save
+            op add Save Save 1
+            write Y memory Save
+            op add Save Save 2
+            set @counter callback
 
-    #rotate a triangle Rz in memory (3 Vec3d)
-        rotatetraingleZ:
-        set callback2 callback
-        op add callback @counter 1
-        jump rotateVect3DZ always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DZ always 0 0
-        op sub Save Save 3
-        op add callback @counter 1
-        jump rotateVect3DZ always 0 0
-        op sub Save Save 3
-        set @counter callback2
+        #rotate a triangle Rz in memory (3 Vec3d)
+            rotatetraingleZ:
+            set callback2 callback
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            op sub Save Save 3
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            op sub Save Save 3
+            set @counter callback2
 
-    #rotate a cube Rz in memory (12 triangles 6 sides)
-        rotateCubeZ:
-        set callback3 callback
-        rotateCubeZLoop:
-        op add callback @counter 1
-        jump rotatetraingleZ always 0 0
-        op add callback @counter 1
-        jump rotatetraingleZ always 0 0
-        op add counter counter 1
-        jump rotateCubeZLoop lessThan counter 6
-        set counter 0
-        op add Save Save 108
-        set @counter callback3
+        #rotate a cube Rz in memory (12 triangles 6 sides)
+            rotateCubeZ:
+            set callback3 callback
+            rotateCubeZLoop:
+            op add callback @counter 1
+            jump rotatetraingleZ always 0 0
+            op add callback @counter 1
+            jump rotatetraingleZ always 0 0
+            op add counter counter 1
+            jump rotateCubeZLoop lessThan counter 6
+            set counter 0
+            op add Save Save 108
+            set @counter callback3
 #draw functions
     #give hit% (return output -1 : 1 ? its directly in the face : its hitting form the back )
         hit%:
@@ -484,7 +487,7 @@
             read y1 memory Save 
             op sub Save Save 1
             read x1 memory Save
-        #memory -> local and add player movement
+        #memory -> local
             op sub x1 x1 playerX
             op sub y1 y1 playerY
             op sub z1 z1 playerZ
@@ -643,20 +646,14 @@
         op sub playerY playerY click
     #make cube and rotate it 
 
-        set X 0.5
-        set Y 0.5
+        set X 0
+        set Y 0
         set Z 10
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
 
-        set X 0.5
-        set Y -0.5
-        set Z 10
-        set Size 10
-        op add callback @counter 1
-        jump cube always 0 0
-
+        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeX always 0 0
 
@@ -667,6 +664,7 @@
         jump rotateCubeZ always 0 0
         
     #draw what in the memory and loop
+        set do3D true
         op add callback @counter 1
         jump draw always 0 0
         jump mainLoop always 0 0
