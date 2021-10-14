@@ -1,0 +1,24 @@
+#a mouse function
+ #this function use 'search connected.mlog' function to work and the block should be name "display"
+    sensor displayX display @x
+    sensor displayY display @y
+    radar any any any distance @this 1 user
+    set click-first false
+    op mul click-before click 2
+    sensor click user @shooting
+    op notEqual click click 1
+    op add @counter @counter click-before
+    op add @counter @counter click
+    set click-first true
+    op notEqual click click 1
+    sensor userX user @shootX
+    sensor userY user @shootY
+    op sub userX userX displayX
+    op sub userY userY displayY
+    op mul userX userX 29.33
+    op mul userY userY 29.33
+    op add userX userX 88
+    op add userY userY 88
+    op sub deltaX userX displayX
+    op sub deltaY userY displayY
+

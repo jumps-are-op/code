@@ -1,0 +1,117 @@
+set object-z 200
+set camera-z -200
+set D-screen 300
+read object-x bank1 n
+op add n n 1
+read object-y bank1 n
+op add n n 1
+read object-z bank1 n
+op add n n 1
+op sub rotation-v 0 camera-rotation-v
+op sub x object-x camera-x
+op sub y object-y camera-y
+op sub z object-z camera-z
+op sin sin rotation-v 0
+op cos cos rotation-v 0
+op mul xcos x cos
+op mul xsin x sin
+op mul rotation-x z sin
+op mul rotation-z z cos
+op add x rotation-x xcos
+op sub z rotation-z xsin
+op sin sin rotation-h 0
+op cos cos rotation-h 0
+op mul ycos y cos
+op mul ysin y sin
+op mul rotation-y z sin
+op mul rotation-z z cos
+op add y rotation-y ycos
+op sub z rotation-z ysin
+op div D-screen/z D-screen z
+op mul x x D-screen/z
+op mul y y D-screen/z
+set size D-screen/z
+op mul size size 100
+op add x x 88
+op add y y 88
+write z bank2 n2
+op add n2 n2 1
+write y bank2 n2
+op add n2 n2 1
+write x bank2 n2
+op add n2 n2 1
+write size bank2 n2
+op add n2 n2 1
+write dis bank2 n2
+op add n2 n2 1
+jump 3 lessThan n 11
+set n2 0
+read z bank2 n2
+op add n2 n2 1
+read y bank2 n2
+op add n2 n2 1
+read x bank2 n2
+op add n2 n2 1
+read size bank2 n2
+op add n2 n2 2
+jump 52 lessThan z 60
+jump 52 greaterThan y 300
+jump 52 greaterThan x 300
+draw image x y @copper size 0 0
+jump 40 lessThan n2 19
+set n2 0
+draw clear 0 0 0 size 0 0
+drawflush display1
+draw color 255 0 0 255 0 0
+draw rect 0 0 176 88 0 0
+draw color 0 0 255 255 0 0
+draw rect 0 88 176 88 0 0
+draw color 255 255 255 255 0 0
+set n 0
+sensor forward switch1 @enabled
+sensor backward switch3 @enabled
+sensor Right switch2 @enabled
+sensor left switch4 @enabled
+sensor +v switch6 @enabled
+sensor -v switch8 @enabled
+sensor +y switch9 @enabled
+sensor -y switch10 @enabled
+jump 77 equal forward 0
+op sin forward camera-rotation-v 0
+op mul forward forward 5
+op add camera-x camera-x forward
+op cos forward camera-rotation-v 0
+op mul forward forward 5
+op add camera-z camera-z forward
+jump 84 equal backward 0
+op sin backward camera-rotation-v 0
+op mul backward backward -5
+op add camera-x camera-x backward
+op cos backward camera-rotation-v 0
+op mul backward backward -5
+op add camera-z camera-z backward
+jump 91 equal Right 0
+op cos Right camera-rotation-v 0
+op mul Right Right 5
+op add camera-x camera-x Right
+op sin Right camera-rotation-v 0
+op mul Right Right -5
+op add camera-z camera-z Right
+jump 98 equal left 0
+op cos left camera-rotation-v 0
+op mul left left -5
+op add camera-x camera-x left
+op sin left camera-rotation-v 0
+op mul left left 5
+op add camera-z camera-z left
+jump 103 equal +v -v
+op mul +v +v 5
+op mul -v -v 5
+op add camera-rotation-v camera-rotation-v +v
+op sub camera-rotation-v camera-rotation-v -v
+jump 108 equal +y -y
+op mul +y +y 5
+op mul -y -y 5
+op add camera-y camera-y +y
+op sub camera-y camera-y -y
+jump 3 always 0 0

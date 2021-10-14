@@ -1,0 +1,256 @@
+# check for special function keys (backspace, delete, shift/caps)
+backspace:
+sensor backspace switch1 @enabled
+jump delete equal backspace false
+control enabled switch1 0
+jump delete equal totalPos 0
+op sub totalPos 8
+op mod shiftBit shiftBit 48
+op idiv entry totalPos 48
+read sequence bank1 entry
+op shl mask<< 255 shiftBit
+op or sequence sequence mask<<
+op xor sequence sequence mask<<
+write sequence bank1 entry
+delete:
+sensor delete switch2 @enabled
+jump shift equal delete false
+control enabled switch2 0
+set totalPos 0
+set i 0
+delLoop:
+read delEntry bank1 i
+jump shift equal delEntry 0
+write 0 bank1 i
+op add i i 1set @counter  delLoop
+shift:
+sensor capslock switch3 @enabled
+sensor shiftKey switch4 @enabled
+op xor uppercase capslock shiftKey
+# initialize value
+set keyGet 5
+# main loop. loop through all keys and if they are on, record their respective ASCII codes
+keyLoop:
+getlink key keyGet
+sensor keyPress key @enabled
+jump nextKey equal keyPress false
+op sub keyNum keyGet 5
+op mul move keyNum 4
+op mul upperMove uppercase 2
+op add move move upperMove
+op add @counter @counter move
+set ASCII 96
+set @counter storeKey
+set ASCII 126
+set @counter storeKey
+set ASCII 49
+set @counter storeKey
+set ASCII 33
+set @counter storeKey
+set ASCII 50
+set @counter storeKey
+set ASCII 64
+set @counter storeKey
+set ASCII 51
+set @counter storeKey
+set ASCII 35
+set @counter storeKey
+set ASCII 52
+set @counter storeKey
+set ASCII 36
+set @counter storeKey
+set ASCII 53
+set @counter storeKey
+set ASCII 37
+set @counter storeKey
+set ASCII 54
+set @counter storeKey
+set ASCII 94
+set @counter storeKey
+set ASCII 55
+set @counter storeKey
+set ASCII 38
+set @counter storeKey
+set ASCII 56
+set @counter storeKey
+set ASCII 42
+set @counter storeKey
+set ASCII 57
+set @counter storeKey
+set ASCII 40
+set @counter storeKey
+set ASCII 48
+set @counter storeKey
+set ASCII 41
+set @counter storeKey
+set ASCII 45
+set @counter storeKey
+set ASCII 95
+set @counter storeKey
+set ASCII 61
+set @counter storeKey
+set ASCII 43
+set @counter storeKey
+set ASCII 113
+set @counter storeKey
+set ASCII 81
+set @counter storeKey
+set ASCII 119
+set @counter storeKey
+set ASCII 87
+set @counter storeKey
+set ASCII 101
+set @counter storeKey
+set ASCII 69
+set @counter storeKey
+set ASCII 114
+set @counter storeKey
+set ASCII 82
+set @counter storeKey
+set ASCII 116
+set @counter storeKey
+set ASCII 84
+set @counter storeKey
+set ASCII 121
+set @counter storeKey
+set ASCII 89
+set @counter storeKey
+set ASCII 117
+set @counter storeKey
+set ASCII 85
+set @counter storeKey
+set ASCII 105
+set @counter storeKey
+set ASCII 73
+set @counter storeKey
+set ASCII 111
+set @counter storeKey
+set ASCII 79
+set @counter storeKey
+set ASCII 112
+set @counter storeKey
+set ASCII 80
+set @counter storeKey
+set ASCII 91
+set @counter storeKey
+set ASCII 123
+set @counter storeKey
+set ASCII 93
+set @counter storeKey
+set ASCII 125
+set @counter storeKey
+set ASCII 13
+set @counter storeKey
+set ASCII 13
+set @counter storeKey
+set ASCII 97
+set @counter storeKey
+set ASCII 65
+set @counter storeKey
+set ASCII 115
+set @counter storeKey
+set ASCII 83
+set @counter storeKey
+set ASCII 100
+set @counter storeKey
+set ASCII 68
+set @counter storeKey
+set ASCII 102
+set @counter storeKey
+set ASCII 70
+set @counter storeKey
+set ASCII 103
+set @counter storeKey
+set ASCII 71
+set @counter storeKey
+set ASCII 104
+set @counter storeKey
+set ASCII 72
+set @counter storeKey
+set ASCII 106
+set @counter storeKey
+set ASCII 74
+set @counter storeKey
+set ASCII 107
+set @counter storeKey
+set ASCII 75
+set @counter storeKey
+set ASCII 108
+set @counter storeKey
+set ASCII 76
+set @counter storeKey
+set ASCII 58
+set @counter storeKey
+set ASCII 59
+set @counter storeKey
+set ASCII 39
+set @counter storeKey
+set ASCII 34
+set @counter storeKey
+set ASCII 92
+set @counter storeKey
+set ASCII 124
+set @counter storeKey
+set ASCII 122
+set @counter storeKey
+set ASCII 90
+set @counter storeKey
+set ASCII 120
+set @counter storeKey
+set ASCII 88
+set @counter storeKey
+set ASCII 99
+set @counter storeKey
+set ASCII 67
+set @counter storeKey
+set ASCII 118
+set @counter storeKey
+set ASCII 86
+set @counter storeKey
+set ASCII 98
+set @counter storeKey
+set ASCII 66
+set @counter storeKey
+set ASCII 110
+set @counter storeKey
+set ASCII 78
+set @counter storeKey
+set ASCII 109
+set @counter storeKey
+set ASCII 77
+set @counter storeKey
+set ASCII 44
+set @counter storeKey
+set ASCII 60
+set @counter storeKey
+set ASCII 46
+set @counter storeKey
+set ASCII 62
+set @counter storeKey
+set ASCII 47
+set @counter satoreKey
+set ASCII 63
+set @counter storeKey
+set ASCII 32
+set @counter storeKey
+set ASCII 32
+# store ASCII using bitshifting for extra efficiency
+storeKey:
+op mod shiftBit totalPos 48
+op idiv entry totalPos 48
+read sequence bank1 entry
+op shl mask<< 255 shiftBit
+op shl ASCII<< ASCII shiftBit
+op or sequence sequence mask<<
+op xor sequence sequence mask<<
+op add sequence sequence ASCII<<
+write sequence bank1 entry
+# disable the pressed key and the shift key, if applicable
+control enabled key 0
+control enabled switch4 0
+op add totalPos totalPos 8
+op min totalPos totalPos 12240
+# continue the loop
+nextKey:
+op add keyGet keyGet 1
+jump keyLoop lessThan keyGet @links

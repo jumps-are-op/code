@@ -1,0 +1,552 @@
+#search memory
+    searchmemory:
+    getlink memory link
+    op add link link 1
+    sensor typememory memory @type
+    jump start equal typememory @memory-bank
+    jump start equal typememory @memory-cell
+    op mod link link @links
+    jump searchmemory always 0 0
+    start:
+    read start memory 0
+    read end memory 1
+    set readInput start
+    start2:
+jump notEnd lessThan readInput end
+end:
+read start memory 0
+set readInput start
+read end memory 1
+jump printflush always 0 0
+notEnd:
+back:
+read chars memory readInput
+op add readInput readInput 1
+jump end greaterThanEq readInput end
+jump printflush equal chars 0
+op mul offset chars 2
+op add @counter @counter offset
+print "^@"
+jump start2 always 0 0
+print "^A"
+jump start2 always 0 0
+print "^B"
+jump start2 always 0 0
+print "^C"
+jump start2 always 0 0
+print "^D"
+jump start2 always 0 0
+print "^E"
+jump start2 always 0 0
+print "^F"
+jump start2 always 0 0
+print "^G"
+jump start2 always 0 0
+print "^H"
+jump start2 always 0 0
+print "^I"
+jump start2 always 0 0
+print "\n"
+jump start2 always 0 0
+print "^K"
+jump start2 always 0 0
+print "^L"
+jump start2 always 0 0
+print "^M"
+jump start2 always 0 0
+print "^N"
+jump start2 always 0 0
+print "^O"
+jump start2 always 0 0
+print "^P"
+jump start2 always 0 0
+print "^Q"
+jump start2 always 0 0
+print "^R"
+jump start2 always 0 0
+print "^S"
+jump start2 always 0 0
+print "^T"
+jump start2 always 0 0
+print "^U"
+jump start2 always 0 0
+print "^V"
+jump start2 always 0 0
+print "^W"
+jump start2 always 0 0
+print "^X"
+jump start2 always 0 0
+print "^Y"
+jump start2 always 0 0
+print "^Z"
+jump start2 always 0 0
+print "^["
+jump start2 always 0 0
+print "^\"
+jump start2 always 0 0
+print "^]"
+jump start2 always 0 0
+print "^^"
+jump start2 always 0 0
+print "^_"
+jump start2 always 0 0
+print " "
+jump start2 always 0 0
+print "!"
+jump start2 always 0 0
+print "''"
+jump start2 always 0 0
+print "#"
+jump start2 always 0 0
+print "$"
+jump start2 always 0 0
+print "%"
+jump start2 always 0 0
+print "&"
+jump start2 always 0 0
+print "'"
+jump start2 always 0 0
+print "("
+jump start2 always 0 0
+print ")"
+jump start2 always 0 0
+print "*"
+jump start2 always 0 0
+print "+"
+jump start2 always 0 0
+print ","
+jump start2 always 0 0
+print "-"
+jump start2 always 0 0
+print "."
+jump start2 always 0 0
+print "/"
+jump start2 always 0 0
+print "0"
+jump start2 always 0 0
+print "1"
+jump start2 always 0 0
+print "2"
+jump start2 always 0 0
+print "3"
+jump start2 always 0 0
+print "4"
+jump start2 always 0 0
+print "5"
+jump start2 always 0 0
+print "6"
+jump start2 always 0 0
+print "7"
+jump start2 always 0 0
+print "8"
+jump start2 always 0 0
+print "9"
+jump start2 always 0 0
+print ":"
+jump start2 always 0 0
+print ";"
+jump start2 always 0 0
+print "<"
+jump start2 always 0 0
+print "="
+jump start2 always 0 0
+print ">"
+jump start2 always 0 0
+print "?"
+jump start2 always 0 0
+print "@"
+jump start2 always 0 0
+print "A"
+jump start2 always 0 0
+print "B"
+jump start2 always 0 0
+print "C"
+jump start2 always 0 0
+print "D"
+jump start2 always 0 0
+print "E"
+jump start2 always 0 0
+print "F"
+jump start2 always 0 0
+print "G"
+jump start2 always 0 0
+print "H"
+jump start2 always 0 0
+print "I"
+jump start2 always 0 0
+print "J"
+jump start2 always 0 0
+print "K"
+jump start2 always 0 0
+print "L"
+jump start2 always 0 0
+print "M"
+jump start2 always 0 0
+print "N"
+jump start2 always 0 0
+print "O"
+jump start2 always 0 0
+print "P"
+jump start2 always 0 0
+print "Q"
+jump start2 always 0 0
+print "R"
+jump start2 always 0 0
+print "S"
+jump start2 always 0 0
+print "T"
+jump start2 always 0 0
+print "U"
+jump start2 always 0 0
+print "V"
+jump start2 always 0 0
+print "W"
+jump start2 always 0 0
+print "X"
+jump start2 always 0 0
+print "Y"
+jump start2 always 0 0
+print "Z"
+jump start2 always 0 0
+print "["
+jump start2 always 0 0
+print "\"
+jump start2 always 0 0
+print "]"
+jump start2 always 0 0
+print "^"
+jump start2 always 0 0
+print "_"
+jump start2 always 0 0
+print "`"
+jump start2 always 0 0
+print "a"
+jump start2 always 0 0
+print "b"
+jump start2 always 0 0
+print "c"
+jump start2 always 0 0
+print "d"
+jump start2 always 0 0
+print "e"
+jump start2 always 0 0
+print "f"
+jump start2 always 0 0
+print "g"
+jump start2 always 0 0
+print "h"
+jump start2 always 0 0
+print "i"
+jump start2 always 0 0
+print "j"
+jump start2 always 0 0
+print "k"
+jump start2 always 0 0
+print "l"
+jump start2 always 0 0
+print "m"
+jump start2 always 0 0
+print "n"
+jump start2 always 0 0
+print "o"
+jump start2 always 0 0
+print "p"
+jump start2 always 0 0
+print "q"
+jump start2 always 0 0
+print "r"
+jump start2 always 0 0
+print "s"
+jump start2 always 0 0
+print "t"
+jump start2 always 0 0
+print "u"
+jump start2 always 0 0
+print "v"
+jump start2 always 0 0
+print "w"
+jump start2 always 0 0
+print "x"
+jump start2 always 0 0
+print "y"
+jump start2 always 0 0
+print "z"
+jump start2 always 0 0
+print "{"
+jump start2 always 0 0
+print "|"
+jump start2 always 0 0
+print "}"
+jump start2 always 0 0
+print "~"
+jump start2 always 0 0
+print "^?"
+jump start2 always 0 0
+print "€"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "‚"
+jump start2 always 0 0
+print "ƒ"
+jump start2 always 0 0
+print "„"
+jump start2 always 0 0
+print "…"
+jump start2 always 0 0
+print "†"
+jump start2 always 0 0
+print "‡"
+jump start2 always 0 0
+print "ˆ"
+jump start2 always 0 0
+print "‰"
+jump start2 always 0 0
+print "Š"
+jump start2 always 0 0
+print "‹"
+jump start2 always 0 0
+print "Œ"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "Ž"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "‘"
+jump start2 always 0 0
+print "’"
+jump start2 always 0 0
+print "“"
+jump start2 always 0 0
+print "”"
+jump start2 always 0 0
+print "•"
+jump start2 always 0 0
+print "–"
+jump start2 always 0 0
+print "—"
+jump start2 always 0 0
+print "˜"
+jump start2 always 0 0
+print "™"
+jump start2 always 0 0
+print "š"
+jump start2 always 0 0
+print "›"
+jump start2 always 0 0
+print "œ"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "ž"
+jump start2 always 0 0
+print "Ÿ"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "¡"
+jump start2 always 0 0
+print "¢"
+jump start2 always 0 0
+print "£"
+jump start2 always 0 0
+print "¤"
+jump start2 always 0 0
+print "¥"
+jump start2 always 0 0
+print "¦"
+jump start2 always 0 0
+print "§"
+jump start2 always 0 0
+print "¨"
+jump start2 always 0 0
+print "©"
+jump start2 always 0 0
+print "ª"
+jump start2 always 0 0
+print "«"
+jump start2 always 0 0
+print "¬"
+jump start2 always 0 0
+print ""
+jump start2 always 0 0
+print "®"
+jump start2 always 0 0
+print "¯"
+jump start2 always 0 0
+print "°"
+jump start2 always 0 0
+print "±"
+jump start2 always 0 0
+print "²"
+jump start2 always 0 0
+print "³"
+jump start2 always 0 0
+print "´"
+jump start2 always 0 0
+print "µ"
+jump start2 always 0 0
+print "¶"
+jump start2 always 0 0
+print "·"
+jump start2 always 0 0
+print "¸"
+jump start2 always 0 0
+print "¹"
+jump start2 always 0 0
+print "º"
+jump start2 always 0 0
+print "»"
+jump start2 always 0 0
+print "¼"
+jump start2 always 0 0
+print "½"
+jump start2 always 0 0
+print "¾"
+jump start2 always 0 0
+print "¿"
+jump start2 always 0 0
+print "À"
+jump start2 always 0 0
+print "Á"
+jump start2 always 0 0
+print "Â"
+jump start2 always 0 0
+print "Ã"
+jump start2 always 0 0
+print "Ä"
+jump start2 always 0 0
+print "Å"
+jump start2 always 0 0
+print "Æ"
+jump start2 always 0 0
+print "Ç"
+jump start2 always 0 0
+print "È"
+jump start2 always 0 0
+print "É"
+jump start2 always 0 0
+print "Ê"
+jump start2 always 0 0
+print "Ë"
+jump start2 always 0 0
+print "Ì"
+jump start2 always 0 0
+print "Í"
+jump start2 always 0 0
+print "Î"
+jump start2 always 0 0
+print "Ï"
+jump start2 always 0 0
+print "Ð"
+jump start2 always 0 0
+print "Ñ"
+jump start2 always 0 0
+print "Ò"
+jump start2 always 0 0
+print "Ó"
+jump start2 always 0 0
+print "Ô"
+jump start2 always 0 0
+print "Õ"
+jump start2 always 0 0
+print "Ö"
+jump start2 always 0 0
+print "×"
+jump start2 always 0 0
+print "Ø"
+jump start2 always 0 0
+print "Ù"
+jump start2 always 0 0
+print "Ú"
+jump start2 always 0 0
+print "Û"
+jump start2 always 0 0
+print "Ü"
+jump start2 always 0 0
+print "Ý"
+jump start2 always 0 0
+print "Þ"
+jump start2 always 0 0
+print "ß"
+jump start2 always 0 0
+print "à"
+jump start2 always 0 0
+print "á"
+jump start2 always 0 0
+print "â"
+jump start2 always 0 0
+print "ã"
+jump start2 always 0 0
+print "ä"
+jump start2 always 0 0
+print "å"
+jump start2 always 0 0
+print "æ"
+jump start2 always 0 0
+print "ç"
+jump start2 always 0 0
+print "è"
+jump start2 always 0 0
+print "é"
+jump start2 always 0 0
+print "ê"
+jump start2 always 0 0
+print "ë"
+jump start2 always 0 0
+print "ì"
+jump start2 always 0 0
+print "í"
+jump start2 always 0 0
+print "î"
+jump start2 always 0 0
+print "ï"
+jump start2 always 0 0
+print "ð"
+jump start2 always 0 0
+print "ñ"
+jump start2 always 0 0
+print "ò"
+jump start2 always 0 0
+print "ó"
+jump start2 always 0 0
+print "ô"
+jump start2 always 0 0
+print "õ"
+jump start2 always 0 0
+print "ö"
+jump start2 always 0 0
+print "÷"
+jump start2 always 0 0
+print "ø"
+jump start2 always 0 0
+print "ù"
+jump start2 always 0 0
+print "ú"
+jump start2 always 0 0
+print "û"
+jump start2 always 0 0
+print "ü"
+jump start2 always 0 0
+print "ý"
+jump start2 always 0 0
+print "þ"
+jump start2 always 0 0
+print "ÿ"
+jump start2 always 0 0
+printflush:
+#search oP
+    searchoP:
+    getlink oP link
+    op add link link 1
+    sensor typeoP oP @type
+    jump printflush2 equal typeoP @message
+    op mod link link @links
+    jump searchoP always 0 0
+printflush2:
+printflush oP
+jump back always 0 0

@@ -1,0 +1,46 @@
+projects {
+"trig 3d engine.mlog" TODO 
+(
+    memory: make the processor can read more than one memory bank\cell
+    draw: the draw command is slow it need to be better and faster
+    light: rework the light and make it possible to have more than one light
+)
+
+"displayer.mlog" TODO
+(
+    displayall: complete the code to make it can draw every thing possible to draw 
+    clear: clear the code and make it more readble
+)
+
+"6502.mlog" TODO
+(
+    delete: delete the file because I didn't complete it and I am working on other projects
+)
+
+"windows.mlog" TODO
+(
+    name: change the name from "windows" to "windowSys.mlog"
+    rebuild: rebuild the code from mindustry compiled code to mlog text based 
+)}
+
+functions {
+"search if place is empty.mlog" TODO
+(
+    complete: complete the function
+)
+
+"slider" TODO
+(
+    memory:make the slider data save into memory instead of local-Var
+    list:make it so you can put lists and display item in the list and you can scroll in the list and give output if the user click in the item 
+)
+
+"sort.mlog" TODO
+(
+    faster:make faster sort system
+)}
+
+far future 
+(
+    make a game engine
+)

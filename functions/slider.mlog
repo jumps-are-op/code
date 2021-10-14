@@ -1,0 +1,37 @@
+#a function that make a slider by giving X,Y and tall,width no caps. return Var output as Value from 0.0 to 1.0
+ #if the user did not click it will return the old data Not 0
+ #this function also use callback for return
+ #this function need 'mouse.mlog' function
+    slider:
+    op div tmpSize tall 5
+    draw color 100 100 100 255 0 0
+    draw rect X Y width tall
+    draw color 0 0 0 0 0 0
+    draw rect X tmpY width tmpSize
+    op add @counter @counter started
+    op add YEnd Y tall
+    op sub tmpY YEnd tmpSize
+    op add @counter @counter click 
+    set @counter callback
+    set started 2
+    op add XEnd X width
+    op greaterThan check userX X
+    op add @counter @counter check
+    set @counter callback
+    op lessThan check userX XEnd
+    op add @counter @counter check
+    set @counter callback
+    op greaterThan check userY Y
+    op add @counter @counter check
+    set @counter callback
+    op lessThan check userY YEnd
+    op add @counter @counter check
+    set @counter callback
+    op sub tmptall YEnd tmpSize
+    op div tmpY tmpSize 2   
+    op sub tmpY userY tmpY
+    op max tmpY tmpY Y
+    op min tmpY tmpY tmptall
+    op sub tmp userY Y
+    op div Output tmp tall
+    set @counter callback 

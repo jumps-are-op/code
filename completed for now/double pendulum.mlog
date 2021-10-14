@@ -1,0 +1,182 @@
+#starting;
+  set r1 30
+  set r2 40
+  set m1 7
+  set m2 7
+  set a1 0
+  set a2 0
+  set offsetX 88
+  set offsetY 100
+  set a1_v 0
+  set a2_v 0
+  set a1_a 0
+  set a2_a 0
+  set g 3
+  sensor displayX display1 @x
+  sensor displayY display1 @y
+  draw clear 0 0 0 0
+  drawflush display2
+  #Vars to make once for Math;
+    #for num1.1
+      op mul -g g -1
+      op add m1+m2 m1 m2
+      op mul 2*m1 m1 2 
+      op add 2*m1+m2 2*m1 m2
+      op mul -g*(2*m1+m2) -g 2*m1+m2
+    #for num2.1
+      op mul -m2 m2 -1
+      op mul -m2*g -m2 g
+    #for num3.1
+      #there is noun
+    #for num4.1
+      #there is noun 
+    #for den.1 
+      #there is noun 
+    #for num1.2
+      #there is noun
+    #for num2.2
+      #there is noun
+    #for num3.2 
+      op mul g*(m1+m2) g m1+m2
+    #for all
+      op div a1 a1 57.29578
+      op div a2 a2 57.29578
+    jump loop always 0 0 
+#draw func();
+  draw:
+  op add displayX1 x1 offsetX
+  op add displayY1 y1 offsetY
+  op add displayX2 x2 offsetX
+  op add displayY2 y2 offsetY
+  draw line offsetX offsetY displayX1 displayY1 0
+  draw poly displayX1 displayY1 255 m1 0
+  draw line displayX1 displayY1 displayX2 displayY2
+  draw poly displayX2 displayY2 255 m2 0
+  draw clear 0 0 0 0 0
+  drawflush display1
+  draw color 0 0 255 255
+  draw rect displayX2 displayY2 1 1 0
+  draw color 255 255 255 255
+  drawflush display2
+  set @counter callBack
+#mainLoop;
+  loop:
+  #Vars to make every Frame;
+    op pow a1_v^2 a1_v 2 
+    op pow a2_v^2 a2_v 2
+    op mul (a1_v^2)*r1 a1_v^2 r1
+    op mul (a2_v^2)*r2 a2_v^2 r2
+    op add (a1_v^2)*r1+(a2_v^2)*r2 (a1_v^2)*r1 (a2_v^2)*r2
+    op mul 2*a2 a2 2
+    op mul 2*a1 a1 2
+    op sub a1-a2 a1 a2
+    op sub 2*a1-2*a2 2*a1 2*a2
+    op sub a1-2*a2 a1 2*a2
+    #sin and cos
+      op cos cos(a1) a1 0
+      op cos cos(displayA1) a1
+      op sin sin(a1) a1 0
+      op cos cos(a2) a2 0
+      op sin sin(a2) a2 0
+      op sin sin(a1-2*a2) a1-2*a2 0
+      op sin sin(a1-a2) a1-a2 0
+      op cos cos(a1-a2) a1-a2 0
+      op cos cos(2*a1-2*a2) 2*a1-2*a2
+      #Vars after cos and sin
+        op mul m2cos(2*a1-2*a2) m2 cos(2*a1-2*a2)
+        op sub (2*m1+m2-(m2cos(2*a1-2*a2))) 2*m1+m2 m2cos(2*a1-2*a2)
+        op mul sin(a1-a2)*m2 sin(a1-a2) m2
+        op mul m2*cos(a1-a2) m2 cos(a1-a2)
+  #Cal x1,y1;
+    op mul displayA1 a1 57.29578
+    op sub displayA1 displayA1 90
+    op cos cos(displayA1) displayA1 0
+    op sin sin(displayA1) displayA1 0
+    op mul x1 r1 cos(displayA1)
+    op mul y1 r1 sin(displayA1)
+  #Cal x2,y2;
+    op mul displayA2 a2 57.29578
+    op sub displayA2 displayA2 90
+    op cos cos(displayA2) displayA2 0
+    op sin sin(displayA2) displayA2 0
+    op mul x2 r2 cos(displayA2)
+    op mul y2 r2 sin(displayA2)
+    op add x2 x2 x1
+    op add y2 y2 y1
+  #draw;
+    op add callBack @counter 1
+    jump draw always 0 0
+  #math1;
+    #num1.1
+      op mul num1 -g*(2*m1+m2) sin(a1)
+    #num2.1
+      op mul num2 -m2*g sin(a1-2*a2)
+    #num3.1
+      op mul num3 -2 sin(a1-a2)*m2
+    #num4.1
+      op mul num4 (a1_v^2)*r1+(a2_v^2)*r2 cos(a1-a2)
+    #den.1
+      op mul den r1 (2*m1+m2-(m2cos(2*a1-2*a2)))
+    #Cal all.1
+      op add num1+num2 num1 num2
+      op mul num3*num4 num3 num4 
+      op add (num1+num2+(num3*num4)) num1+num2 num3*num4
+    #math2
+      #num1.2
+        op mul num1.2 2 sin(a1-a2)
+      #num2.2 
+        op mul num2.2 (a1_v^2)*r1 m1+m2
+      #num3.2
+        op mul num3.2 g*(m1+m2) cos(a1)
+      #num4.2
+        op mul num4.2 (a2_v^2)*r2 m2*cos(a1-a2)
+      #den.2
+        op mul den.2 r2 (2*m1+m2-(m2cos(2*a1-2*a2)))
+      #Cal all.2
+        op add num2.2+num3.2 num2.2 num3.2
+        op add num2.2+num3.2+num4.2 num2.2+num3.2 num4.2
+        op mul num1.2*(num2.2+num3.2+num4.2) num1.2 num2.2+num3.2+num4.2
+  #Cal a_a;
+    op div a1_a (num1+num2+(num3*num4)) den
+    op div a2_a num1.2*(num2.2+num3.2+num4.2) den.2
+  #Cal a and a_v;
+    op add a1_v a1_v a1_a
+    op add a2_v a2_v a2_a
+    op add a1 a1 a1_v
+    op add a2 a2 a2_v
+    #avoid inf time;
+      op mul a1_v a1_v 0.99
+      op mul a2_v a2_v 0.99
+#controls
+  radar any any any distance @this 1 user
+  jump loop equal user null
+  sensor shooting user @shooting 
+  jump loop equal shooting 0
+  sensor userX user @shootX
+  sensor userY user @shootY
+  op sub userX userX displayX
+  op sub userY userY displayY
+  op mul userX userX 29.33
+  op mul userY userY 29.33
+  op add userX userX 88
+  op add userY userY 88
+  op sub deltaX userX displayX1
+  op sub deltaY userY displayY1
+  op angle angle deltaX deltaY
+  op add angle angle 90
+  op lessThan jump angle 360
+  op add @counter @counter jump
+  op sub angle angle 360 
+  op mul angle angle 0.017453
+  set a2 angle
+  set a1 a2
+  set a1_v 0
+  set a2_v 0
+  set a1_a 0
+  set a2_a 0
+  draw clear 0 0 0 0
+  drawflush display2
+jump loop always 0 0
+#things to make;
+  #a better way to avoid inf time
+  #better controls

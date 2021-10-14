@@ -1,0 +1,35 @@
+#things to know before using
+    #by jumps are op#4549
+    #you should bind a unit to check it 
+    #you can put this anywhere in  your code
+    #this function will only take 1 unit for that and if that unit is dead then it will take another unit
+    #x1,y1 should be the bottom left not the top left  
+    #this will only return 1 Var is empty 
+    #if empty = 1 then its empty if not then its not empty 
+#debug Vars
+    set x1 20
+    set y1 20
+    set x2 39
+    set y2 39
+    ubind @zenith
+#take a free unit 
+    sensor tmp STARTUNIT @dead
+    jump alreadyBind equal tmp 0
+    set STARTUNIT @unit
+    alreadyBind:
+    jump skip notEqual @unit STARTUNIT
+op sub deltaX x2 x1
+op sub deltaY y2 y1
+op len len deltaX deltaY
+jump BiggerThan27RAD greaterThan len 27
+op div deltaX deltaX 2
+op div deltaY deltaY 2
+op add tmpX x1 deltaX
+op add tmpY y1 deltaY
+ucontrol move tmpX tmpY
+sensor x @unit @x
+end
+BiggerThan27RAD:
+set pass 0
+skip:
+end

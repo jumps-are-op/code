@@ -1,0 +1,65 @@
+#windows in Aunkestry;
+    #debug Vars;
+        set screen-Size 176
+        set window-minimizing 0
+        set window-unMinimizing 0
+        set window-restore-up 0
+        set window-restore-up2 0
+        set computer-x 10
+        set computer-y 160
+        op add computer-x-Right computer-x 10
+        op sub computer-x-left computer-x 10
+        op add computer-y-up computer-y 10
+        op sub computer-y-bottom computer-y 10
+        set window-Restore-size 120
+    #MainLoop;
+        #call functions;
+            MainLoop:
+            op add callBack @counter 1
+            jump drawfunc always 0 0
+            jump MainLoop always 0 0
+        #draw function;
+            drawfunc:
+            #draw desktop
+                draw image computer-x computer-y @micro-processor 15 0 0
+            #draw window;
+                draw color 0 0 0 255 0 0
+                draw rect window-left window-bottom window-size window-size 0 0
+                draw color 0 0 255 255 0 0
+                draw lineRect window-miniMaxframe window-title-Bar -8 10 0 0
+                draw color 255 0 0 255 0 0
+                draw lineRect window-Right window-title-Bar -8 10 0 0
+                draw color 125 125 0 255 0 0
+                draw lineRect window-exitframe window-title-Bar -9 10 0 0
+                draw color 255 255 255 255 0 0
+                draw lineRect window-left window-bottom window-size window-size 0 0
+                draw rect window-left window-title-Bar window-size 10 0 0
+                #until now don't know what the program want to draw or where to draw 
+                #so everything is ohno and the x and y possistion is printx and printy
+                #and the x and y possistion should be a % so if its 101 it will get out of the window
+                op div %full window-size screen-Size
+                op mul printx printx 1.76 
+                op mul printy printy 1.76 
+                op mul printx printx %full
+                op mul printy printy %full
+                draw image printx printy @ohno size 0 0
+            #draw taskbar
+             #don't draw the taskbar if the window is in fullScreen mode;
+                jump endDraw equal fullScreen 1
+                draw color 0 0 120 255 0 0
+                draw rect 0 0 screen-Size 20 0 0
+                draw color 255 255 255 255 0 0
+                draw rect 1 1 18 16 0 0
+                draw image 10 10 @core-nucleus 13 0 0
+                draw image taskbar-icon 10 @micro-processor 14 0 0
+            #full screen animation
+                jump endDraw notEqual draw-animation-moveScreen-top 1 
+                draw stroke 2 window-move-bottom 0 0 0 0
+                draw lineRect window-move-left window-move-bottom window-move-size window-move-size 0 0
+                draw stroke 1 window-move-bottom 0 0 0 0
+            #end draw
+                endDraw:
+                draw image mouse-x mouse-y @poly 10 0 0
+                draw clear 0 0 0 0 0 0
+                drawflush display1
+                set @counter callBack

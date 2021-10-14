@@ -1,0 +1,175 @@
+print ""
+printflush message1
+#search readMEM 
+    nextMEM:
+    set read-slot 0
+    getlink readMEM link
+    op add link link 1
+    sensor typereadMEM readMEM @type
+    jump mainLoop equal typereadMEM @memory-bank
+    op mod link link @links
+    jump nextMEM always 0 0
+mainLoop:
+    jump nextMEM greaterThanEq read-slot 507
+    read input readMEM read-slot
+    jump nextMEM equal input 0
+    op add read-slot read-slot 1
+#decode the metaData
+    decode:
+    op and metaData input 15
+
+
+    jump clear    equal metaData 0
+    #this should be goto color but it lookup only for testing  
+    jump lookup   equal metaData 1
+    jump stroke   equal metaData 2
+    jump line     equal metaData 3
+    jump rect     equal metaData 4
+    jump lineRect equal metaData 5
+    jump poly     equal metaData 6
+    jump lookup   equal metaData 7
+    jump lookup   equal metaData 8
+
+    #this is only for debugging it will be deleted soon
+    jump mainLoop always 0 0
+    op sub ERROR-read read-slot 1
+    jump ERROR always 0 0
+#do clear command if metaData = 0
+clear:
+    op shr clearR-tmp  input 4
+    op and clearR clearR-tmp 255
+    op shr clearG-tmp  input 12
+    op and clearG clearG-tmp 255
+    op shr clearB-tmp  input 20
+    op and clearB clearB-tmp 255
+    
+        draw clear clearR clearG clearB 0 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do color command if metaData = 1
+color:
+    op shr colorR-tmp  input 4
+    op and colorR clearR-tmp 255
+    op shr colorG-tmp  input 12
+    op and colorG colorG-tmp 255
+    op shr colorB-tmp  input 20
+    op and colorB colorB-tmp 255
+    op shr colorA-tmp  input 28
+    op and colorA colorA-tmp 255
+    
+        draw color colorR colorG colorB colorA 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do stroke command if metaData = 2
+stroke:
+    op shr stroke-tmp input 4
+    op and stroke stroke-tmp 255
+    
+        draw stroke stroke 0 0 0 0 0
+    jump mainLoop always 0 0
+#do line command if metaData = 3
+line:
+    op shr x1-tmp  input 4
+    op and x1 x1-tmp 255
+    op shr y1-tmp  input 12
+    op and y1 y1-tmp 255
+    
+    op shr x2-tmp  input 20
+    op and x2 x2-tmp 255
+    op shr y2-tmp  input 28
+    op and y2 y2-tmp 255
+
+        draw line x1 y1 x2 y2 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do rcet command if metaData = 4
+rect:
+    op shr x-tmp  input 4
+    op and x x-tmp 255
+    op shr y-tmp  input 12
+    op and y y-tmp 255
+
+    op shr height-tmp  input 20
+    op and height height-tmp 255
+    op shr width-tmp  input 28
+    op and width width-tmp 255
+
+        draw rect x y width height 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do linercet command if metaData = 5
+lineRect:
+    op shr x-tmp  input 4
+    op and x x-tmp 255
+    op shr y-tmp  input 12
+    op and y y-tmp 255
+    
+    op shr height-tmp  input 20
+    op and height height-tmp 255
+    op shr width-tmp  input 28
+    op and width width-tmp 255
+
+        draw lineRect x y width height 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do poly command if metaData = 6
+poly:
+    op shr x-tmp  input 4
+    op and x x-tmp 255
+    op shr y-tmp  input 12
+    op and y y-tmp 255
+
+    op shr sides-tmp  input 20
+    op and sides sides-tmp 255
+    op shr radius-tmp  input 28
+    op and radius radius-tmp 255 
+    
+    op shr rotation-tmp input 36
+    op and rotation rotation-tmp 511
+    
+        draw poly x y sides radius rotation 0 0
+        drawflush display1
+    jump mainLoop always 0 0
+#do image if metaDataq = 7
+lookup:
+    op shr lookup-tmp input 4
+    op and lookup lookup-tmp 3
+    op shr image-tmp input 6
+    op and image-tmp image-tmp 255
+    #go to the lookup for the image
+    jump setImageUnit equal lookup 1
+    jump setImageItem equal lookup 2
+    jump setImageLiguid equal lookup 3
+        lookup block image image-tmp
+        jump drawImage always 0 0
+        setImageUnit:
+        lookup unit image image-tmp
+        jump drawImage always 0 0
+        setImageItem:
+        lookup item image image-tmp
+        jump drawImage always 0 0
+        setImageLiguid:
+        lookup liquid image image-tmp
+    drawImage:
+
+    op shr x-tmp  input 14
+    op and x x-tmp 255
+    op shr y-tmp  input 22
+    op and y y-tmp 255
+
+    op shr size-tmp input 30
+    op and size size-tmp 255
+
+    op shr rotation-tmp input 38
+    op and rotation rotation-tmp 511
+    
+        draw image x y image size rotation 0
+        drawflush display1
+    jump mainLoop always 0 0
+
+ERROR:
+print "ERROR invalid input at "
+print ERROR-read
+printflush message1
+drawflush display1
+jump ERROR always 0 0

@@ -1,0 +1,49 @@
+set memory bank1
+set start 0
+set end 108
+#sort from start to end in a place in memory
+ #this function need 'search connected.mlog' or the memory place name is "memory"
+ #2 Vars as input start and end
+    sort:
+    op add DC start 2
+    op sub long end start 
+    loopSort:
+    jump endSort greaterThan DC end 
+    read data1 memory DC
+    op add DC DC 3
+    read data2 memory DC 
+    jump loopSort lessThanEq data1 data2
+    read data1 memory DC
+    op sub DC DC 1
+    read data2 memory DC
+    op sub DC DC 1
+    read data3 memory DC
+    op sub DC DC 1 
+    read data4 memory DC
+    op sub DC DC 1
+    read data5 memory DC
+    op sub DC DC 1
+    read data6 memory DC
+    write data3 memory DC
+    op add DC DC 1
+    write data2 memory DC
+    op add DC DC 1
+    write data1 memory DC
+    op add DC DC 1
+    write data6 memory DC
+    op add DC DC 1
+    write data5 memory DC
+    op add DC DC 1
+    write data4 memory DC
+    op add DC DC 3
+    jump loopSort always 0 0
+    endSort:
+    op add n^2 n^2 1
+    set DC start
+    op div e n^2 long
+    op floor e e 0
+    print e
+    print "%"
+    printflush message1
+    jump loopSort lessThan n^2 long
+    set @counter callback

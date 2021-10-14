@@ -1,0 +1,9 @@
+#search Block
+    searchBlock:
+    getlink Block link
+    op add link link 1
+    sensor typeBlock Block @type
+    jump start equal typeBlock @memory-bank
+    jump start equal typeBlock @memory-cell
+    op mod link link @links
+    jump searchBlock always 0 0

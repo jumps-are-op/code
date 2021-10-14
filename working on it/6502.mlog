@@ -1,0 +1,78 @@
+#make some data types  
+    set bit 1
+    set Byte 255
+    set Word 65535
+    set u32 4294967295
+
+#Edite this Var to change the Max memory
+    set Max_MEM 65535
+    
+    jump MainLoop always 0 0
+    
+#you can call the function from anywhere to start/reset the CPU 
+#this function will not reset the memory if you wany to reset the memory call MEM.INS
+    ResetCpu:
+    set PC 65532
+    set SP 256
+    set A 0
+    set X 0
+    set Y 0
+    set D 0
+    set C 0
+    set Z 0
+    set I 0
+    set D 0
+    set V 0
+    set N 0
+        #this function is inside another function but you can also call it and it will work
+        #also this function need wire 2.0 IF WIRE IS 1.0 IT WILL NOT WORK
+        MEM.INS:
+        set i 0
+                while1:
+                write i cell1 i2
+                op add i2 i2 1
+                write 0 cell1 i2
+                op add i2 i2 1
+                op and i2 i2 63
+                op add i i 1
+                jump while1 lessThan i Max_MEM
+    set @counter callBack
+
+    
+    #this function will execute the code 
+    #you should input ExecuteNum so it know how much to Execute
+    Execute:
+    while2:
+    #this is also a function in anotehr function and you call also call it alone
+    fetchByte:
+        write -2 cell1 i 
+        op add i i 1
+        write PC cell1 i
+        op add PC PC 1 
+        op sub ExecuteNum ExecuteNum 1
+        wait 0.5 #this is a wait command so it will not read the wrong data
+        op add i i 1
+        read data cell1 i
+    jump while2 greaterThan ExecuteNum 0
+    set @counter callBack
+
+#the main loop
+#you can make PC2 and SP2 if you want to make 2 CPUs
+    MainLoop:
+    op and PC PC Word
+    op and SP SP Word
+    op and A A Byte
+    op and X X Byte
+    op and Y Y Byte
+    op and C C bit
+    op and Z Z bit
+    op and I I bit
+    op and D D bit
+    op and V V bit
+    op and N N bit
+op add callBack @counter 1
+jump ResetCpu always 0 0
+set ExecuteNum 2
+op add callback @counter 1
+jump Execute always 0 0 
+jump MainLoop always 0 0

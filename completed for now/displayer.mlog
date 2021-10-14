@@ -1,0 +1,257 @@
+set tmp 0
+draw color 255 255 0 255 0 0
+draw triangle 165 155 160 130 145 130
+draw triangle 155 110 160 140 175 140
+draw color 255 255 255 255 0 0
+draw stroke 1 255 255 255 0 0
+draw lineRect 88 88 89 89 0 0
+draw lineRect 88 88 -89 89 0 0
+draw lineRect 88 88 -89 49 0 0
+draw lineRect 88 88 89 -89 0 0
+draw lineRect 88 88 -89 -89 0 0
+sensor max node1 @powerNetCapacity
+sensor capacity node1 @powerNetStored
+op div energy capacity max
+op mul amount energy 65
+jump 27 lessThanEq energy 0.15
+draw color 0 255 0 255 0 0
+jump 21 greaterThanEq energy 0.75
+draw color 255 0 0 255 0 0
+jump 21 lessThanEq energy 0.25
+draw color 255 255 0 255 0 0
+draw rect 98 96 40 amount 0 0
+draw color 0 50 50 255 0 0
+draw stroke 5 3 50 75 0 0
+draw lineRect 93 91 50 75 0 0
+jump 29 equal tmp 1
+jump 33 always 0 0
+set tmp 1
+jump 18 always 0 0
+draw stroke 5 255 255 255 40 75
+draw color 255 255 255 255 40 75
+draw line 118 148 118 118 40 75
+draw poly 118 103 10 5 0 75
+set imageSize 14
+set imageY 8
+set add1 8
+set add2 6
+set n 0
+jump 71 lessThan @time time
+op add time @time 2000
+jump 44 lessThan @time time2
+op add time2 @time 60000
+set TMH 0
+set TMWP 0
+set THealth 0
+set WP 0
+set TMaxHealth 0
+getlink block n
+op add n n 1
+jump 71 greaterThan n @links
+sensor type block @type
+jump 53 equal type @fuse
+jump 55 notEqual type @parallax
+op add WP WP 1.81
+op add MWP MWP 1.81
+jump 58 notEqual type @segment
+op add WP WP 1.052
+op add MWP MWP 1.052
+jump 61 notEqual type @meltdown
+op add WP WP 5
+op add MWP MWP 5
+jump 64 notEqual type @foreshadow
+op add WP WP 10
+op add MWP MWP 10
+sensor health block @health
+sensor maxHealth block @maxHealth
+op add THealth THealth health
+op add TMaxHealth TMaxHealth maxHealth
+jump 70 lessThanEq TMaxHealth TMH
+set TMH TMaxHealth
+jump 47 always 0 0
+jump 73 lessThanEq MWP TMWP
+set TMWP MWP
+op div weapon%% WP TMWP
+op mul tmp energy 0.75
+op mul tmp2 totalthor% 0.5
+op add tmp tmp tmp2
+op mul displaytmp tmp weapon%%
+op mul display displaytmp 68
+draw color 255 255 255 255 0 0
+draw image imageY 147 @duo imageSize 0 0
+draw color 255 255 0 255 0 0
+draw rect 17 140 display imageSize 0 0
+set MWP 0
+op div health% THealth TMH
+op mul display health% 68
+draw image imageY 165 @plastanium-wall-large imageSize 0 0
+draw color 0 255 0 255 0 0
+draw rect 17 158 display imageSize 0 0
+set x 5
+set n 0
+draw color 255 255 255 255 0 0
+sensor total1 vault1 @thorium
+sensor total2 vault2 @thorium
+op add total total1 total2
+op div totalthor% total 4200
+op mul display totalthor% 150
+op add x x add1
+draw image x imageY @thorium imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @silicon
+sensor total2 vault2 @silicon
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @silicon imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @titanium
+sensor total2 vault2 @titanium
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @titanium imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @metaglass
+sensor total2 vault2 @metaglass
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @metaglass imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @graphite
+sensor total2 vault2 @graphite
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @graphite imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @sand
+sensor total2 vault2 @sand
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @sand imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @lead
+sensor total2 vault2 @lead
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image x imageY @lead imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+# add unit counter here
+op add x x add1
+op add x x add1
+draw image 165 imageY @zenith imageSize 0 0
+write display cell1 n
+op add n n 1
+op add x x add2
+sensor total1 vault1 @surge-alloy
+sensor total2 vault2 @surge-alloy
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+op add x x add1
+op add x x add1
+draw image imageY 120 @surge-alloy imageSize 0 0
+write display cell1 n
+op add n n 1
+sensor total1 vault1 @phase-fabric
+sensor total2 vault2 @phase-fabric
+op add total total1 total2
+op div total% total 4200
+op mul display total% 150
+draw image imageY 100 @phase-fabric imageSize 0 0
+write display cell1 n
+set x 5
+set n 0
+read display cell1 n
+op add n n 1
+draw color 255 200 255 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 100 100 100 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 110 110 255 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 255 255 255 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 100 100 100 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 255 255 210 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 100 50 150 255 0 0
+draw rect x imageSize imageSize display 0 0
+op add x x add1
+op add x x add2
+op add x x add1
+read display cell1 n
+op add n n 1
+draw color 100 50 50 255 0 0
+draw rect x imageSize imageSize display 0 0
+read display cell1 n
+op add n n 1
+draw color 255 225 125 255 0 0
+draw rect imageSize 115 display imageSize 0 0
+read display cell1 n
+op add n n 1
+draw color 150 100 100 255 0 0
+draw rect imageSize 95 display imageSize 0 0
+draw clear 0 0 0 0 0 0
+drawflush display1

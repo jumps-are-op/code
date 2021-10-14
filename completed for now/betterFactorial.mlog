@@ -1,0 +1,41 @@
+#starting a new Factorial;
+    #clear old messages and old data;
+        jump dontDeleteTheOutput equal CalDone 1 
+        print "[green]Reading..."
+        printflush message1
+        dontDeleteTheOutput:
+        print "[green]Reading..."
+        printflush message2
+        set oldNum Num
+        set Num 0
+#read the input and print it;
+    read:
+    sensor add_Num switch1 @enabled
+    control enabled switch1 0 
+    op add Num Num add_Num
+    print "[yellow]Input\n"
+    print Num
+    #check if its the first time to Cal the data so it will not output null; 
+            jump FirstRead equal CalDone 0
+            print "\nOld input\n"
+            print oldNum
+            FirstRead:
+    printflush message2
+    sensor endReading switch2 @enabled
+    jump read notEqual endReading 1
+    control enabled switch2 0
+#main loop;
+    #when starting a loop;
+        startLoop:
+        set totalNum Num
+        set currentNum Num
+    #the loop;
+        loop:
+        op sub currentNum currentNum 1
+        op mul totalNum totalNum currentNum
+        jump loop notEqual currentNum 1
+        set CalDone 1
+    #print output;
+        print "[orange]Output\n"
+        print totalNum
+        printflush message1
