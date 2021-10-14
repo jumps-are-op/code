@@ -1,4 +1,4 @@
-#starting Vars
+#starting
     set firstTime @time #the time the processor start working
     set RAD 565.486677646   #multibly pi by 180 to give a value to duv by to make a number in RAD
     set memory bank1      #the memory where to save the data and draw from
@@ -28,8 +28,8 @@
         op div Zq ZF ZF-ZN
         op div ZNq ZFZN ZF-ZN
         op mul aF a FOVRAD    #multibly a by FOVRAD for math later in the code
-#jump to the mainLoop to skip the functions
-    jump mainLoop always 0 0
+    #jump to the mainLoop to skip the functions
+        jump mainLoop always 0 0
 #save a 3d vec (x,y,z) to 3 slots in memory
     vec3d: 
     write x memory Save
@@ -337,7 +337,7 @@
             op mul zcos0 z cos0
             op mul z-sin0 z -sin0
             op add X xcos0 z-sin0
-            op add Z xsin0 xcos0
+            op add Z xsin0 zcos0
             op add X X baseX
             op add Z Z baseZ
             write X memory Save
@@ -655,13 +655,7 @@
 
         op add angle angle 1
         op add callback @counter 1
-        jump rotateCubeX always 0 0
-
-        op add callback @counter 1
         jump rotateCubeY always 0 0
-
-        op add callback @counter 1
-        jump rotateCubeZ always 0 0
         
     #draw what in the memory and loop
         set do3D true
