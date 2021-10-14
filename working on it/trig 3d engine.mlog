@@ -274,6 +274,7 @@
             op sin sin0 angle 0
             op cos cos0 angle 0
             op mul -sin0 sin0 -1
+            op add @counter @counter notMem
             op sub Save Save 1
             read z memory Save
             op sub Save Save 1
@@ -288,6 +289,7 @@
             op add Z zcos0 y-sin0
             op add Y Y baseY
             op add Z Z baseZ
+            op add @counter @counter notMem
             write Y memory Save
             op add Save Save 1
             write Z memory Save
@@ -326,6 +328,7 @@
             op sin sin0 angle 0
             op cos cos0 angle 0
             op mul -sin0 sin0 -1
+            op add @counter @counter notMem
             op sub Save Save 1
             read z memory Save
             op sub Save Save 2
@@ -340,6 +343,7 @@
             op add Z xsin0 zcos0
             op add X X baseX
             op add Z Z baseZ
+            op add @counter @counter notMem
             write X memory Save
             op add Save Save 2
             write Z memory Save
@@ -378,6 +382,7 @@
             op sin sin0 angle 0
             op cos cos0 angle 0
             op mul -sin0 sin0 -1
+            op add @counter @counter notMem
             op sub Save Save 2
             read y memory Save
             op sub Save Save 1
@@ -392,6 +397,7 @@
             op add Y ycos0 x-sin0
             op add Y Y baseY
             op add X X baseX
+            op add @counter @counter notMem
             write X memory Save
             op add Save Save 1
             write Y memory Save
@@ -499,6 +505,83 @@
             op sub x3 x3 playerX
             op sub y3 y3 playerY
             op sub z3 z3 playerZ
+
+            set baseX playerX
+            set baseY playerY
+            set baseZ playerZ
+            set notMem 4
+            set tmp angle
+
+            set angle playerRX
+            set z z1
+            set y y1
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            set y1 Y
+            set z1 Z
+
+            set z z2
+            set y y2
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            set y2 Y
+            set z2 Z
+            
+            set z z3
+            set y y3
+            op add callback @counter 1
+            jump rotateVect3DX always 0 0
+            set y3 Y
+            set z3 Z
+
+            set angle playerRY
+
+            set x x1 
+            set z z1 
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            set x1 X
+            set z1 Z
+
+            set x x2 
+            set z z2 
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            set x2 X
+            set z2 Z
+
+            set x x3 
+            set z z3 
+            op add callback @counter 1
+            jump rotateVect3DY always 0 0
+            set x3 X
+            set z3 Z
+
+            set angle playerRZ
+            
+            set x x1
+            set y y1
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            set x1 X
+            set z1 Z
+
+            set x x2
+            set y y2
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            set x2 X
+            set z2 Z
+
+            set x x3
+            set y y3
+            op add callback @counter 1
+            jump rotateVect3DZ always 0 0
+            set x3 X
+            set z3 Z
+           
+            set angle tmp
+            set notMem 0
         #skip if needed
             jump skipDraw lessThan z3 0
             jump skipDraw lessThan z2 0
@@ -644,6 +727,22 @@
         sensor click switch6 @enabled
         op mul click click time.delta
         op sub playerY playerY click
+        sensor click switch7 @enabled
+        op mul click click time.delta
+        op mul click click 10
+        op add playerRY playerRY click
+        sensor click switch8 @enabled
+        op mul click click time.delta
+        op mul click click 10
+        op sub playerRY playerRY click
+        sensor click switch9 @enabled
+        op mul click click time.delta
+        op mul click click 10
+        op add playerRX playerRX click
+        sensor click switch10 @enabled
+        op mul click click time.delta
+        op mul click click 10
+        op sub playerRX playerRX click
     #make cube and rotate it 
 
         set X 0
