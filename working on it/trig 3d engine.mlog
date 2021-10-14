@@ -423,7 +423,24 @@
         op add Save Save 108
         set @counter callback3
 #draw functions
-    #make 3D -> 2D
+    #give hit% (return output -1 : 1 ? its directly in the face : its hitting form the back )
+        hit%:
+        op pow x X 2
+        op pow y Y 2
+        op pow z Z 2
+        op add tmp x y
+        op add tmp tmp z
+        op sqrt l tmp 0
+        op div X X l
+        op div Y Y l
+        op div Z Z l
+        op mul X X3 X
+        op mul Y Y3 Y
+        op mul Z Z3 Z
+        op add tmp X Y 
+        op add output tmp Z
+        set @counter callback
+    #make 3D -> 2D (triangles only)
         3D->2D:
         op mul tmp z1 Zq
         op sub tmp tmp ZNq
@@ -431,14 +448,12 @@
         op div X1 X tmp
         op mul Y y1 FOVRAD
         op div Y1 Y tmp
-
         op mul tmp z2 Zq
         op sub tmp tmp ZNq
         op mul X x2 aF
         op div X2 X tmp
         op mul Y y2 FOVRAD
         op div Y2 Y tmp
-
         op mul tmp z3 Zq
         op sub tmp tmp ZNq
         op mul X x3 aF
@@ -546,25 +561,10 @@
             #    set Y 0        
             #    set Z 1        
             #
-            #    op pow x X 2
-            #    op pow y Y 2
-            #    op pow z Z 2
+            #    op add callback @counter 1
+            #    jump hit%: always 0 0
             #    
-            #    op add tmp x y
-            #    op add tmp tmp z
-            #    op sqrt l tmp 0
-            #
-            #    op div X X l
-            #    op div Y Y l
-            #    op div Z Z l
-            #
-            #    op mul X X3 X
-            #    op mul Y Y3 Y
-            #    op mul Z Z3 Z
-            #    op add tmp X Y 
-            #    op add dp tmp Z
-            #
-            #    op mul dp dp -1
+            #    op mul dp output -1
             #    op mul dp dp lightPow
             ##the light to colors
             
