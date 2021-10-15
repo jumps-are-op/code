@@ -557,29 +557,6 @@
             set x3 X
             set z3 Z
 
-            set angle playerRZ
-            
-            set x x1
-            set y y1
-            op add callback @counter 1
-            jump rotateVect3DZ always 0 0
-            set x1 X
-            set z1 Z
-
-            set x x2
-            set y y2
-            op add callback @counter 1
-            jump rotateVect3DZ always 0 0
-            set x2 X
-            set z2 Z
-
-            set x x3
-            set y y3
-            op add callback @counter 1
-            jump rotateVect3DZ always 0 0
-            set x3 X
-            set z3 Z
-           
             set angle tmp
             set notMem 0
         #skip if needed
@@ -592,6 +569,12 @@
             jump skipDraw greaterThan y3 5
             jump skipDraw greaterThan y2 5
             jump skipDraw greaterThan y1 5
+            jump skipDraw lessThan x3 0
+            jump skipDraw lessThan x2 0
+            jump skipDraw lessThan x1 0
+            jump skipDraw lessThan y3 0
+            jump skipDraw lessThan y2 0
+            jump skipDraw lessThan y1 0
         #i made this a comment because light take so much time to process
             ##normal
             #    #line1
@@ -654,12 +637,6 @@
             #    op mul dp dp lightPow
             ##the light to colors
             
-        # i made this a comment because i didn't make the math for 4D if you have read this please help me i need to find the math for the 4D because i can't find it
-        #
-        ##from 4D -> 3D
-        #    op add callback @counter 1
-        #    jump 4D->3D equal do4D true
-        #
         #from 3D -> 2D
             op add callback @counter 1
             jump 3D->2D equal do3D true
