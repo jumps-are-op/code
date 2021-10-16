@@ -493,6 +493,81 @@
             read y1 memory Save 
             op sub Save Save 1
             read x1 memory Save
+
+        #this gonna be changed because light take so much time to process
+            #normal
+                #line1
+                    op sub X1 x2 x1
+                    op sub Y1 y2 y1
+                    op sub Z1 z2 z1
+                   
+                #line2
+                    op sub X2 x3 x1
+                    op sub Y2 y3 y1
+                    op sub Z2 z3 z1
+                #some hard coded matrix math     
+                    op mul tmp Z1 Y2
+                    op mul X3 Y1 Z2 
+                    op sub X3 X3 tmp
+                    
+                    op mul tmp X1 Z2
+                    op mul Y3 Z1 X2 
+                    op sub Y3 Y3 tmp
+                    
+                    op mul tmp Y1 X2
+                    op mul Z3 X1 Y2 
+                    op sub Z3 Z3 tmp
+                
+                    op pow X3^2 X3 2
+                    op pow Y3^2 Y3 2
+                    op pow Z3^2 Z3 2
+                
+                    op add tmp X3^2 Y3^2
+                    op add tmp Z3^2 tmp
+                    op sqrt l tmp 0
+                
+                    op div X3 X3 l
+                    op div Y3 Y3 l
+                    op div Z3 Z3 l 
+                
+                    #this is just X3 = X3 * (x1 - playerX)  Y3 = Y3 * (y1 - playerY)  Z3 = Z3 * (z1 - playerZ)
+                        op sub tmp x1 playerX
+                        op mul X3 X3 tmp
+                        op sub tmp y1 playerY
+                        op mul Y3 Y3 tmp
+                        op sub tmp z1 playerZ
+                        op mul Z3 Z3 tmp
+                        op add tmp X3 Y3 
+            
+                        op add normal tmp Z3
+                        jump skipDraw greaterThanEq normal 0 
+            
+            #add light if any (its hard coded for now)
+                
+                set lightPow 20 #the light power for the lighting
+                set X 0        
+                set Y 0        
+                set Z 1        
+                op add callback @counter 1
+                jump hit% always 0 0
+                op mul dpr output -1
+                op mul dpr dpr lightPow
+
+                set X 0        
+                set Y 1        
+                set Z 0        
+                op add callback @counter 1
+                jump hit% always 0 0
+                op mul dpg output -8
+                op mul dpg dpg lightPow
+
+                set X 1        
+                set Y 0        
+                set Z 0        
+                op add callback @counter 1
+                jump hit% always 0 0                
+                op mul dpb output -8
+                op mul dpb dpb lightPow
         #memory -> local
             op sub x1 x1 playerX
             op sub y1 y1 playerY
@@ -559,7 +634,7 @@
 
             set angle tmp
             set notMem 0
-        #skip if needed
+            #skip if needed
             jump skipDraw lessThan z3 0
             jump skipDraw lessThan z2 0
             jump skipDraw lessThan z1 0
@@ -569,74 +644,12 @@
             jump skipDraw greaterThan y3 5
             jump skipDraw greaterThan y2 5
             jump skipDraw greaterThan y1 5
-            jump skipDraw lessThan x3 0
-            jump skipDraw lessThan x2 0
-            jump skipDraw lessThan x1 0
-            jump skipDraw lessThan y3 0
-            jump skipDraw lessThan y2 0
-            jump skipDraw lessThan y1 0
-        #i made this a comment because light take so much time to process
-            ##normal
-            #    #line1
-            #        op sub X1 x2 x1
-            #        op sub Y1 y2 y1
-            #        op sub Z1 z2 z1
-            #       
-            #    #line2
-            #        op sub X2 x3 x1
-            #        op sub Y2 y3 y1
-            #        op sub Z2 z3 z1
-            #    #some hard coded matrix math     
-            #        op mul tmp Z1 Y2
-            #        op mul X3 Y1 Z2 
-            #        op sub X3 X3 tmp
-            #        
-            #        op mul tmp X1 Z2
-            #        op mul Y3 Z1 X2 
-            #        op sub Y3 Y3 tmp
-            #        
-            #        op mul tmp Y1 X2
-            #        op mul Z3 X1 Y2 
-            #        op sub Z3 Z3 tmp
-            #    
-            #        op pow X3^2 X3 2
-            #        op pow Y3^2 Y3 2
-            #        op pow Z3^2 Z3 2
-            #    
-            #        op add tmp X3^2 Y3^2
-            #        op add tmp Z3^2 tmp
-            #        op sqrt l tmp 0
-            #    
-            #        op div X3 X3 l
-            #        op div Y3 Y3 l
-            #        op div Z3 Z3 l 
-            #    
-            #        #this is just X3 = X3 * (x1 - playerX)  Y3 = Y3 * (y1 - playerY)  Z3 = Z3 * (z1 - playerZ)
-            #            op sub tmp x1 playerX
-            #            op mul X3 X3 tmp
-            #            op sub tmp y1 playerY
-            #            op mul Y3 Y3 tmp
-            #            op sub tmp z1 playerZ
-            #            op mul Z3 Z3 tmp
-            #            op add tmp X3 Y3 
-            #
-            #            op add normal tmp Z3
-            #            jump skipDraw greaterThanEq normal 0 
-            #
-            ##add light if any (its hard coded for now)
-            #    
-            #    set lightPow 20 #the light power for the lighting
-            #    set X 0        
-            #    set Y 0        
-            #    set Z 1        
-            #
-            #    op add callback @counter 1
-            #    jump hit%: always 0 0
-            #    
-            #    op mul dp output -1
-            #    op mul dp dp lightPow
-            ##the light to colors
-            
+            jump skipDraw lessThan x3 -5
+            jump skipDraw lessThan x2 -5
+            jump skipDraw lessThan x1 -5
+            jump skipDraw lessThan y3 -5
+            jump skipDraw lessThan y2 -5
+            jump skipDraw lessThan y1 -5
         #from 3D -> 2D
             op add callback @counter 1
             jump 3D->2D equal do3D true
@@ -652,15 +665,19 @@
             op min dpr dpr 255
             op min dpg dpg 255
             op min dpb dpb 255
-            op max dpr dpr 255
-            op max dpg dpg 255
-            op max dpb dpb 255
+            op max dpr dpr 0
+            op max dpg dpg 0
+            op max dpb dpb 0
         #draw 3 lines (a triangle)
-            draw color dpr dpg dpb 255 0 0
+            jump doColor equal doColor true
+            draw color 255 255 255 255 0 0
             draw line X1 Y1 X2 Y2
             draw line X2 Y2 X3 Y3
-            draw line X3 Y3 X1 Y1 
-
+            draw line X3 Y3 X1 Y1
+            jump skipDraw always 0 0
+            doColor:
+            draw color dpr dpg dpb 255 0 0
+            draw triangle X1 Y1 X2 Y2 X3 Y3
             skipDraw:
         #reset dpr,dpg,dpb so it will not overflow
             set dpr 0
@@ -715,25 +732,74 @@
         sensor click switch9 @enabled
         op mul click click time.delta
         op mul click click 10
-        op add playerRX playerRX click
+        op sub playerRX playerRX click
         sensor click switch10 @enabled
         op mul click click time.delta
         op mul click click 10
-        op sub playerRX playerRX click
+        op add playerRX playerRX click
     #make cube and rotate it 
 
-        set X 0
-        set Y 0
+        set X 0.8
+        set Y 0.8
         set Z 10
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
-
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeX always 0 0
         op add angle angle 1
         op add callback @counter 1
         jump rotateCubeY always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeZ always 0 0
+        set X 0.8
+        set Y -0.8
+        set Z 10
+        set Size 10
+        op add callback @counter 1
+        jump cube always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeX always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeY always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeZ always 0 0
+        set X -0.8
+        set Y 0.8
+        set Z 10
+        set Size 10
+        op add callback @counter 1
+        jump cube always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeX always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeY always 0 0
+        op add angle angle 1
+        op add callback @counter 1
+        jump rotateCubeZ always 0 0
+        set X -0.8
+        set Y -0.8
+        set Z 10
+        set Size 10
+        op add callback @counter 1
+        jump cube always 0 0
+        op add callback @counter 1
+        jump rotateCubeX always 0 0
+        op add callback @counter 1
+        jump rotateCubeY always 0 0
+        op add callback @counter 1
+        jump rotateCubeZ always 0 0
+
         
     #draw what in the memory and loop
+        set doColor true
         set do3D true
         op add callback @counter 1
         jump draw always 0 0
