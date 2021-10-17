@@ -635,24 +635,24 @@
             set angle tmp
             set notMem 0
             #skip if needed
-            jump skipDraw lessThan z3 0
-            jump skipDraw lessThan z2 0
-            jump skipDraw lessThan z1 0
-            jump skipDraw greaterThan x3 5
-            jump skipDraw greaterThan x2 5
-            jump skipDraw greaterThan x1 5
-            jump skipDraw greaterThan y3 5
-            jump skipDraw greaterThan y2 5
-            jump skipDraw greaterThan y1 5
-            jump skipDraw lessThan x3 -5
-            jump skipDraw lessThan x2 -5
-            jump skipDraw lessThan x1 -5
-            jump skipDraw lessThan y3 -5
-            jump skipDraw lessThan y2 -5
-            jump skipDraw lessThan y1 -5
+                jump skipDraw lessThan z3 0
+                jump skipDraw lessThan z2 0
+                jump skipDraw lessThan z1 0
+                jump skipDraw greaterThan x3 5
+                jump skipDraw greaterThan x2 5
+                jump skipDraw greaterThan x1 5
+                jump skipDraw greaterThan y3 5
+                jump skipDraw greaterThan y2 5
+                jump skipDraw greaterThan y1 5
+                jump skipDraw lessThan x3 -5
+                jump skipDraw lessThan x2 -5
+                jump skipDraw lessThan x1 -5
+                jump skipDraw lessThan y3 -5
+                jump skipDraw lessThan y2 -5
+                jump skipDraw lessThan y1 -5
         #from 3D -> 2D
             op add callback @counter 1
-            jump 3D->2D equal do3D true
+            jump 3D->2D equal 0 0
 
         #center the draw
             op add X1 X1 88
@@ -671,12 +671,17 @@
         #draw 3 lines (a triangle)
             jump doColor equal doColor true
             draw color 255 255 255 255 0 0
+            jump doFill equal doFill true 
+            jump dontFill always 0 0
+            doColor:
+            draw color dpr dpg dpb 255 0 0
+            jump doFill equal doFill true
+            dontFill:
             draw line X1 Y1 X2 Y2
             draw line X2 Y2 X3 Y3
             draw line X3 Y3 X1 Y1
             jump skipDraw always 0 0
-            doColor:
-            draw color dpr dpg dpb 255 0 0
+            doFill:
             draw triangle X1 Y1 X2 Y2 X3 Y3
             skipDraw:
         #reset dpr,dpg,dpb so it will not overflow
@@ -741,7 +746,7 @@
 
         set X 0.8
         set Y 0.8
-        set Z 10
+        set Z 15
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
@@ -756,7 +761,7 @@
         jump rotateCubeZ always 0 0
         set X 0.8
         set Y -0.8
-        set Z 10
+        set Z 15
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
@@ -771,7 +776,7 @@
         jump rotateCubeZ always 0 0
         set X -0.8
         set Y 0.8
-        set Z 10
+        set Z 15
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
@@ -786,7 +791,7 @@
         jump rotateCubeZ always 0 0
         set X -0.8
         set Y -0.8
-        set Z 10
+        set Z 15
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
@@ -800,6 +805,7 @@
         
     #draw what in the memory and loop
         set doColor true
+        set doFill true
         set do3D true
         op add callback @counter 1
         jump draw always 0 0
