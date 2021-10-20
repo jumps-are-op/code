@@ -12,7 +12,7 @@ I has saved so if I needed it in some way
 
 Function in mlog is a small piece of code made so you you can copy it
 
-to your code so you will not need to write it agian and it made to be as fast and as small as possible
+to your code so you will not need to write it again and it made to be as fast and as small as possible
 
 ## License
 
@@ -30,4 +30,3 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 see https://www.gnu.org/licenses for more info about the Free Software Foundation
-
