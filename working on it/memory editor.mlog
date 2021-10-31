@@ -1,0 +1,66 @@
+set memory bank1
+set display message1
+jump main always 0 0
+
+displayMEM:
+read data memory n
+op floor data data 0
+op log10 len data 0
+op floor len len 0
+op add len len 1
+op add totalLen totalLen len
+op log10 len n 0
+op floor len len 0
+op add len len 1
+op add totalLen totalLen len
+op add totalLen totalLen 2
+jump end greaterThanEq totalLen 199
+jump printnotselected notEqual selected n
+op add totalLen totalLen 6
+print n
+print ": >"
+print "{"
+print data
+print "}< \n"
+op add n n 1
+jump displayMEM always 0 0
+printnotselected:
+op add totalLen totalLen 4
+print n
+print ":    "
+print data
+print "\n" 
+op add n n 1
+jump displayMEM always 0 0
+end:
+printflush display
+set endn n
+set n 0
+set totalLen 0
+set @counter callback
+main:
+print "JUMPS memory editor 0.1 beta\n"
+op add callback @counter 1
+jump displayMEM always 0 0
+sensor click switch1 @enabled
+control enabled switch1 0
+op add selected selected click
+sensor click switch2 @enabled
+control enabled switch2 0
+op sub selected selected click
+op and selected selected 511
+op sub tmp endn selected
+op sub sizen endn startn 
+op sub sizen-2 sizen 2
+jump skip0 lessThanEq tmp sizen-2
+op sub tmp tmp sizen-2
+op sub startn startn tmp
+jump skip1 always 0 0
+skip0:
+jump skip1 greaterThanEq tmp 2
+op sub tmp 2 tmp
+op add startn startn tmp
+skip1:
+set n startn
+op add n n 0
+jump main always 0 0

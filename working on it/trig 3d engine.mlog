@@ -2,10 +2,10 @@
     set firstTime @time #the time the processor start working
     set RAD 565.486677646   #multibly pi by 180 to give a value to duv by to make a number in RAD
     set memory bank1      #the memory where to save the data and draw from
-    set DisplayHight 176     #the whole screen hight 
+    set DisplayHight 176     #the whole screen hight
     set DisplayWidth 176     #the whole screen width
     set ZF 1000     #the farest thing the player can see into the distance
-    set ZN 0.1      #don't play with this number or object will disappear when getting close to the player  
+    set ZN 0.1      #don't play with this number or object will disappear when getting close to the player
     set FOV 90      #feild of view of the player
     set Size 10     #the size of the cube so you can see it
     #clear the memory
@@ -13,25 +13,25 @@
     clear:
     write 0 memory Save
     op sub Save Save 1
-    jump clear greaterThanEq Save 0 
+    jump clear greaterThanEq Save 0
     #some math
-     op div a DisplayHight DisplayWidth #a 
+     op div a DisplayHight DisplayWidth #a
      op div FOV/2 FOV 2         #this should div by 2
-     op div FOV/2 FOV/2 RAD     #make the number to RAD  
+     op div FOV/2 FOV/2 RAD     #make the number to RAD
      op tan tan FOV/2 0         #tan of the FOV by 2
-     op div FOVRAD 1 tan        #1/tan for the feild of view 
+     op div FOVRAD 1 tan        #1/tan for the feild of view
 
     #SUS AMONG US
         op sub ZF-ZN ZF ZN
-        op mul ZFZN ZF ZN 
+        op mul ZFZN ZF ZN
 
         op div Zq ZF ZF-ZN
         op div ZNq ZFZN ZF-ZN
         op mul aF a FOVRAD    #multibly a by FOVRAD for math later in the code
-    #jump to the mainLoop to skip the functions
-        jump mainLoop always 0 0
+    #jump to the main to skip the functions
+        jump main always 0 0
 #save a 3d vec (x,y,z) to 3 slots in memory
-    vec3d: 
+    vec3d:
     write x memory Save
     op add Save Save 1
     write y memory Save
@@ -60,7 +60,7 @@
     write z3 memory Save
     op add Save Save 1
     set @counter callback
-#save a cube to 108 memory slots (12 triangles) 
+#save a cube to 108 memory slots (12 triangles)
  #need baseX baseY baseZ and Size and the cube will be saved from the center
     cube:
     set callback3 callback
@@ -69,8 +69,8 @@
     set baseX X
     set baseY Y
     set baseZ Z
-    op sub baseX baseX HalfSize 
-    op sub baseY baseY HalfSize 
+    op sub baseX baseX HalfSize
+    op sub baseY baseY HalfSize
     op sub baseZ baseZ HalfSize
     #face 1 South
         #tingle 1
@@ -84,17 +84,17 @@
             set x2 X
             set y2 Y
             set z2 Z
-            
+
             op add X baseX Size
             op add Y baseY Size
             op add Z baseZ 0
             set x3 X
             set y3 Y
             set z3 Z
-            
+
             op add callback @counter 1
             jump triangle always 0 0
-        
+
         #tingle 2
 
             set x2 x3
@@ -107,7 +107,7 @@
             set z3 Z
             op add callback @counter 1
             jump triangle always 0 0
-    
+
     #face 2 East
         #tingle 1
             op add X baseX Size
@@ -126,7 +126,7 @@
             set z3 Z
             op add callback @counter 1
             jump triangle always 0 0
-        
+
         #tingle 2
 
             set x2 x3
@@ -140,7 +140,7 @@
             op add callback @counter 1
             jump triangle always 0 0
 
-    #face 3 North 
+    #face 3 North
         #tingle 1
             set x1 X
             set y1 Y
@@ -156,7 +156,7 @@
             set z3 Z
             op add callback @counter 1
             jump triangle always 0 0
-        
+
         #tingle 2
 
             set x2 x3
@@ -170,7 +170,7 @@
             op add callback @counter 1
             jump triangle always 0 0
 
-    #face 4 west 
+    #face 4 west
         #tingle 1
             set x1 X
             set y1 Y
@@ -185,7 +185,7 @@
             set z3 Z
             op add callback @counter 1
             jump triangle always 0 0
-        
+
         #tingle 2
 
             set x2 x3
@@ -227,7 +227,7 @@
             set z3 Z
             op add callback @counter 1
             jump triangle always 0 0
-            
+
     #face 6 Bottom
         #tingle 1
             op add Y baseY 0
@@ -278,7 +278,7 @@
             op sub Save Save 1
             read z memory Save
             op sub Save Save 1
-            read y memory Save 
+            read y memory Save
             op sub z z baseZ
             op sub y y baseY
             op mul zsin0 z sin0
@@ -332,7 +332,7 @@
             op sub Save Save 1
             read z memory Save
             op sub Save Save 2
-            read x memory Save 
+            read x memory Save
             op sub z z baseZ
             op sub x x baseX
             op mul xcos0 x cos0
@@ -376,7 +376,7 @@
             op add Save Save 108
             set @counter callback3
     #Rz
-        #rotate a 3d Vec Rz in memory 
+        #rotate a 3d Vec Rz in memory
             rotateVect3DZ:
             op mod angle angle 360
             op sin sin0 angle 0
@@ -386,7 +386,7 @@
             op sub Save Save 2
             read y memory Save
             op sub Save Save 1
-            read x memory Save 
+            read x memory Save
             op sub y y baseY
             op sub x x baseX
             op mul ysin0 y sin0
@@ -446,7 +446,7 @@
         op mul X X3 X
         op mul Y Y3 Y
         op mul Z Z3 Z
-        op add tmp X Y 
+        op add tmp X Y
         op add output tmp Z
         set @counter callback
     #make 3D -> 2D (triangles only)
@@ -470,7 +470,7 @@
         op mul Y y3 FOVRAD
         op div Y3 Y tmp
         set @counter callback
-    #draw every triangles in the memory 
+    #draw every triangles in the memory
         draw:
         set callback2 callback
         #read the data x,y,z
@@ -478,19 +478,19 @@
             op sub Save Save 1
             read z3 memory Save
             op sub Save Save 1
-            read y3 memory Save 
+            read y3 memory Save
             op sub Save Save 1
             read x3 memory Save
             op sub Save Save 1
             read z2 memory Save
             op sub Save Save 1
-            read y2 memory Save 
+            read y2 memory Save
             op sub Save Save 1
             read x2 memory Save
             op sub Save Save 1
             read z1 memory Save
             op sub Save Save 1
-            read y1 memory Save 
+            read y1 memory Save
             op sub Save Save 1
             read x1 memory Save
 
@@ -500,36 +500,36 @@
                     op sub X1 x2 x1
                     op sub Y1 y2 y1
                     op sub Z1 z2 z1
-                   
+
                 #line2
                     op sub X2 x3 x1
                     op sub Y2 y3 y1
                     op sub Z2 z3 z1
-                #some hard coded matrix math     
+                #some hard coded matrix math
                     op mul tmp Z1 Y2
-                    op mul X3 Y1 Z2 
+                    op mul X3 Y1 Z2
                     op sub X3 X3 tmp
-                    
+
                     op mul tmp X1 Z2
-                    op mul Y3 Z1 X2 
+                    op mul Y3 Z1 X2
                     op sub Y3 Y3 tmp
-                    
+
                     op mul tmp Y1 X2
-                    op mul Z3 X1 Y2 
+                    op mul Z3 X1 Y2
                     op sub Z3 Z3 tmp
-                
+
                     op pow X3^2 X3 2
                     op pow Y3^2 Y3 2
                     op pow Z3^2 Z3 2
-                
+
                     op add tmp X3^2 Y3^2
                     op add tmp Z3^2 tmp
                     op sqrt l tmp 0
-                
+
                     op div X3 X3 l
                     op div Y3 Y3 l
-                    op div Z3 Z3 l 
-                
+                    op div Z3 Z3 l
+
                     #this is just X3 = X3 * (x1 - playerX)  Y3 = Y3 * (y1 - playerY)  Z3 = Z3 * (z1 - playerZ)
                         op sub tmp x1 playerX
                         op mul X3 X3 tmp
@@ -537,35 +537,35 @@
                         op mul Y3 Y3 tmp
                         op sub tmp z1 playerZ
                         op mul Z3 Z3 tmp
-                        op add tmp X3 Y3 
-            
+                        op add tmp X3 Y3
+
                         op add normal tmp Z3
-                        jump skipDraw greaterThanEq normal 0 
-            
+                        jump skipDraw greaterThanEq normal 0
+
             #add light if any (its hard coded for now)
-                
+
                 set lightPow 20 #the light power for the lighting
-                set X 0        
-                set Y 0        
-                set Z 1        
+                set X 0
+                set Y 0
+                set Z 1
                 op add callback @counter 1
                 jump hit% always 0 0
                 op mul dpr output -1
                 op mul dpr dpr lightPow
 
-                set X 0        
-                set Y 1        
-                set Z 0        
+                set X 0
+                set Y 1
+                set Z 0
                 op add callback @counter 1
                 jump hit% always 0 0
                 op mul dpg output -8
                 op mul dpg dpg lightPow
 
-                set X 1        
-                set Y 0        
-                set Z 0        
+                set X 1
+                set Y 0
+                set Z 0
                 op add callback @counter 1
-                jump hit% always 0 0                
+                jump hit% always 0 0
                 op mul dpb output -8
                 op mul dpb dpb lightPow
         #memory -> local
@@ -601,7 +601,7 @@
             jump rotateVect3DX always 0 0
             set y2 Y
             set z2 Z
-            
+
             set z z3
             set y y3
             op add callback @counter 1
@@ -611,22 +611,22 @@
 
             set angle playerRY
 
-            set x x1 
-            set z z1 
+            set x x1
+            set z z1
             op add callback @counter 1
             jump rotateVect3DY always 0 0
             set x1 X
             set z1 Z
 
-            set x x2 
-            set z z2 
+            set x x2
+            set z z2
             op add callback @counter 1
             jump rotateVect3DY always 0 0
             set x2 X
             set z2 Z
 
-            set x x3 
-            set z z3 
+            set x x3
+            set z z3
             op add callback @counter 1
             jump rotateVect3DY always 0 0
             set x3 X
@@ -661,7 +661,7 @@
             op add Y2 Y2 88
             op add X3 X3 88
             op add Y3 Y3 88
-        #safty 
+        #safty
             op min dpr dpr 255
             op min dpg dpg 255
             op min dpb dpb 255
@@ -671,7 +671,7 @@
         #draw 3 lines (a triangle)
             jump doColor equal doColor true
             draw color 255 255 255 255 0 0
-            jump doFill equal doFill true 
+            jump doFill equal doFill true
             jump dontFill always 0 0
             doColor:
             draw color dpr dpg dpb 255 0 0
@@ -690,11 +690,21 @@
             set dpb 0
             jump drawloop greaterThanEq Save 9 #stop reading after the slot is less than 9
         #things to do after the end of draw
-            draw clear 0 0 0 0 0 0 
-            drawflush display1 
+            draw clear 0 0 0 0 0 0
+            drawflush display1
             set @counter callback2
 #main loop to call fuctions and set Vars
  #if you didn't call draw() it will not draw
+    main:
+        set angle 1
+        set X 0.8
+        set Y 0.8
+        set Z 15
+        set Size 10
+        op add callback @counter 1
+        jump cube always 0 0
+        op sub Save Save 108
+
     mainLoop:
     #in every loop
         #time,fps,time.delta
@@ -706,7 +716,6 @@
             op div fps 1 time.delta
         #reset Vars
          #if you delete this there is a chance the engine will breake
-            set Save 0 
     #control the player
         sensor click switch1 @enabled
         op mul click click time.delta
@@ -742,21 +751,15 @@
         op mul click click time.delta
         op mul click click 10
         op add playerRX playerRX click
-    #make cube and rotate it 
-
-        set X 0.8
-        set Y 0.8
-        set Z 15
-        set Size 10
-        op add callback @counter 1
-        jump cube always 0 0
-        op add angle angle 1
+    #make cube and rotate it
+        op add Save Save 108
+        set baseX 0.8
+        set baseY 0.8
+        set baseZ 15
         op add callback @counter 1
         jump rotateCubeX always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeY always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeZ always 0 0
         set X 0.8
@@ -765,13 +768,10 @@
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeX always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeY always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeZ always 0 0
         set X -0.8
@@ -780,13 +780,10 @@
         set Size 10
         op add callback @counter 1
         jump cube always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeX always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeY always 0 0
-        op add angle angle 1
         op add callback @counter 1
         jump rotateCubeZ always 0 0
         set X -0.8
@@ -802,7 +799,7 @@
         op add callback @counter 1
         jump rotateCubeZ always 0 0
 
-        
+
     #draw what in the memory and loop
         set doColor true
         set doFill true
@@ -811,4 +808,3 @@
         jump draw always 0 0
         jump mainLoop always 0 0
 #end
-    
