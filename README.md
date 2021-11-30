@@ -2,12 +2,6 @@
 
 A place where I save all of my work
 
-## Why there is a folder called lost data?
-
-I was saving my code data into a sd-card and its overheat so some data has been lost,
-
-I has saved so if I needed it in some way
-
 ## What the code do in the functions folder
 
 Function in mlog is a small piece of code made so you you can copy it
